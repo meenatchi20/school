@@ -235,3 +235,13 @@ select {
   li:hover {
     background-color: darkgrey;
   }
+
+  .editBtn {
+        margin-bottom: 5px;
+        display:block;
+  }
+
+  .button {
+        margin-top: 5px;
+        background-color: red;
+  }

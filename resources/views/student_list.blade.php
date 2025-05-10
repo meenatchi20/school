@@ -35,11 +35,11 @@
             <td>{{$student->age}}</td>
            {{-- <td>{{$student->department->department_name}}</td> --}}
             <td>
-                <a href="{{route('student.edit',$student->id)}}">edit</a> 
+                <a href="{{route('student.edit',$student->id)}}" class="editBtn">edit</a> 
                     <form action="{{route('student.delete',$student->id)}}" method ="POST" onclick="return confirm('Are You Sure You Want To Delete This Record?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit">DELETE</button>
+                        <button class="button" type="submit">DELETE</button>
                  </form>
             </td>
            
