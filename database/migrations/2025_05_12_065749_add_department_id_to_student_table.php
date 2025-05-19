@@ -12,10 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('student', function (Blueprint $table) {
-            // $table->unsignedBigInteger('department_id')->nullable()->after('age');
-
-            // // Add the foreign key constraint
-            // $table->foreign('department_id')->references('id')->on('department')->onDelete('cascade');
+            $table->unsignedBigInteger('department_id')->nullable()->after('age');
+            $table->foreign('department_id')->references('id')->on('department')->onDelete('cascade');
         });
     }
 
@@ -25,10 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('student', function (Blueprint $table) {
-            
-                // $table->dropForeign(['department_id']);
-                // $table->dropColumn('department_id');
-            });
-      
+            //
+        });
     }
 };

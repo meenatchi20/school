@@ -8,9 +8,10 @@
 			@yield('style')
 		</head>	
 		<body>
-			@include('header')
+			@yield('header')
             @yield('content') 
-			@include('footer')
+			@yield('footer')
+
 		</body>
 </html>
 

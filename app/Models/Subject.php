@@ -10,12 +10,12 @@ class Subject extends Model
     use HasFactory;
 
     protected $table = 'subjects';
-    protected $fill = ['subject_name'];
+    protected $fillable = ['subject_name'];
 
 
     public function students()
     {
-        return $this->belongsToMany(Student::class);
+        return $this->belongsToMany(Student::class,'student_mapping','student_id','subject_id');
     }
 
 }

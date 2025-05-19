@@ -21,31 +21,8 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-         //         $id = $this->route('id');
-    //         return [
-    //             'email'=> ['required',
-    //                        'email',
-    //                        Rule::unique('student_data','email')->ignore($id)],
 
-    //             'phone_no'=> 'required|unique:student_data,phone_no|numeric',
-    //             'first_name'=>'required',
-    //             'last_name'=>'required',
-    //             'age'=>'required',
-    //         ];
-    //     }
-
-    //     public function messages(): array
-    //     {
-    //         return [
-    //             'email.unique' => 'Emails is already exists',
-    //             'phone_no.unique' => 'Phone Number is already exists'
-    //         ];
-
-    // }
-
-
-            $id = $this->route('id'); // Gets the ID from the route (works for update)
-
+            $id = $this->route('id'); 
             return [
                 'email' => [
                     'required',
@@ -60,8 +37,8 @@ class StoreUserRequest extends FormRequest
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'age' => 'required|integer',
-                'department_name' => 'required|string|max:255',
-                //'subject_name' => 'required|string|max:255',
+                'department_id' => 'required|string|max:255',
+                'subject_name.*' => 'required',
 ];
 
 }

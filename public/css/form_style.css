@@ -78,21 +78,6 @@ h1 {
     
 }
 
-table,th,td {
-    border:1px solid black;
-    border-collapse:collapse;
-    padding:5px;
-}
-table {
-    width:80%;
-    margin:50px auto;
-}
-th{
-    text-align:center;
-}
-/* .addEmployee {
-    text-align:center;
-} */
 
 
 .header {
@@ -102,6 +87,7 @@ th{
     display: flex;
     justify-content:space-between;
     align-items: center;
+    margin-bottom: 30px;
 }
 
 .header a {
@@ -193,13 +179,14 @@ select {
     display: none;
     z-index: 2;
     position: absolute;
-    background-color: dimgrey;
-    color: white;
+    background-color:white;
+    color: black;
     border: black;
     border-width: 1px;
     border-style: solid;
     border-radius: 5px;
     padding: 3px;
+    width: 160px;
   }
   
   
@@ -221,27 +208,48 @@ select {
     padding: 0;
     margin: 0;
     overflow-y: auto;
+    max-width: 150px;
     max-height: 100px;
     padding-right: 10px
   }
   
-  /*li {
-    padding-top: calc(var(--bs-gutter-y)* -1);
-    padding-right: calc(var(--bs-gutter-x)* -.5);
-    padding-left: calc(var(--bs-gutter-x)* -.5);
-    font-size: small;
-  }*/
-  
-  li:hover {
-    background-color: darkgrey;
-  }
-
   .editBtn {
         margin-bottom: 5px;
         display:block;
   }
 
-  .button {
-        margin-top: 5px;
-        background-color: red;
-  }
+ .searchForm {
+    display: flex;
+
+ }
+
+
+#subjects  {
+    width:250px;
+    margin: 5px;
+    border:1px solid #ccc;
+    padding: 7px;
+    text-align: center;
+    border-radius: 5px;
+    cursor:pointer;
+}
+
+checkbox {
+    cursor: pointer;
+}
+
+.clear {
+    width:100px;
+    height:36px;
+    border: none;
+    background-color:red;
+    text-align: center;
+    text-decoration: none;
+    line-height: 40px;
+    border-radius: 5px;
+    margin:auto;
+}
+.clear a {
+    text-decoration: none;
+    color:white;
+}

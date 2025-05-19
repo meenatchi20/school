@@ -21,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::controller(StudentController::class)
+
         ->prefix('student')
         ->as('')
         ->middleware(['auth'])
@@ -31,6 +32,10 @@ Route::controller(StudentController::class)
             Route::get('edit/{id}','edit')->name('student.edit');
             Route::put('update/{id}','update')->name('student.update');
             Route::DELETE('delete/{id}','destroy')->name('student.delete');
+            Route::GET('search','searchField')->name('search');
+            // Route::get('downloadpdf','downloadPdf')->name('pdfdownload');
+            Route::get('downloadexcel','studentExcelExport')->name('exceldownload');
+             Route::POST('implodeexcel','ImportStudentData')->name('implodeexcel');
         });
 
  Route::controller(StudentAuthController::class)
@@ -44,10 +49,4 @@ Route::controller(StudentController::class)
             Route::get('logout','logout')->middleware('auth')->name('user.logout');
         });     
 
-        // Route::controller(DepartmentController::class)
-        // ->prefix('department')
-        // ->as('')
-        // ->group(function () {
-        //     //Route::get('create', 'create')->name('department.create');
-        //     Route::POST('store', 'store')->name('department.store');
-        // });
+        

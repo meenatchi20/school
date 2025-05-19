@@ -9,8 +9,8 @@ class Student extends Model
 {
     use HasFactory;
     protected $table = 'student';
-    protected $fill = ['first_name','last_name','email','phone_no','age'];
-    protected $fillable = ['first_name','last_name','email','phone_no','age'];
+    protected $fill = ['first_name','last_name','email','phone_no','age','department_id'];
+    protected $fillable = ['first_name','last_name','email','phone_no','age','department_id'];
     
 
     public function department()
@@ -18,13 +18,10 @@ class Student extends Model
         return $this->belongsTo(Department::class);
     }
 
-    // public function subject()
-    // {
-    //     return $this->belongsTo(Subject::class);
-    // }
+    public function subject()
+    {
+        return $this->belongsToMany(Subject::class,'student_mapping','student_id','subject_id');
+    }
 
-    public function studentMappings()
-{
-    return $this->hasMany(StudentMapping::class);
-}
+
 }

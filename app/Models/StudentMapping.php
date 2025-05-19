@@ -11,15 +11,7 @@ class StudentMapping extends Model
 
    
     protected  $table = 'student_mapping';
-    protected $fillable = ['student_id','department_id'];
+    protected $fillable = ['student_id','subject_id'];
 
-    public function student()
-    {
-        return $this->belongsTo(Student::class);
-    }
-
-    public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
+    
 }
