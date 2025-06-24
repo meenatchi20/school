@@ -25,11 +25,12 @@ class StudentImport implements ToCollection, WithHeadingRow
 
              $subject = $row['subjectname'];
              $subjectname = explode(',',$subject);
-             $subjectname = Subject::whereIn('subject_name',$subjectname)->pluck('id');
+             $subjectName = Subject::whereIn('subject_name',$subjectname)->pluck('id');
             
              $student = Student::updateOrCreate(
                 ['email' => $row['email']],
-            ['first_name' =>$row['firstname'],
+        [
+            'first_name' =>$row['firstname'],
             'last_name' =>$row['lastname'],
             'email' =>$row['email'],
             'phone_no' =>$row['mobileno'],
@@ -37,8 +38,9 @@ class StudentImport implements ToCollection, WithHeadingRow
             'department_id' => $departmentId ? $departmentId->id : ''
         ]
     );
-             $student->subject()->sync($subjectname);
-
+             
+              $student->subject()->syncWithoutDetaching($subjectName);
+        
         }
         
     }

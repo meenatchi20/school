@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\validation\Rule;
+use Illuminate\Validation\Rule;
 class StoreUserRequest extends FormRequest
 {
     /**
@@ -39,6 +39,7 @@ class StoreUserRequest extends FormRequest
                 'age' => 'required|integer',
                 'department_id' => 'required|string|max:255',
                 'subject_name.*' => 'required',
+                
 ];
 
 }

@@ -7,7 +7,7 @@
     @include('header')
 @endsection
 		@section('content')
-						<h1>Employee Registration</h1>
+						<h1>Student Registration</h1>
 						<form action="{{route('student.store')}}" method="POST" class="form">
                         @csrf
 						<label for="first_name">FirstName : </label>
@@ -44,7 +44,7 @@
 								<span>{{$errors->first('age')}}</span>
 							@endif
 						<div class="selectDepartment">
-						<label for="age">Department :</label>
+						<label for="department_id">Department :</label>
 						<select id="department_id" name="department_id">
 							<option value="" disabled selected hidden>Select Department</option>
 							<option value="1"  {{old('department_id') == 1 ? 'selected' : ''}}>Biology</option>
@@ -73,8 +73,6 @@
 							{{in_array(4,old('subject_name',[])) ? 'checked' : ''}}/>Physics</li>
 							<li><input type="checkbox" name="subject_name[]" id="subject_5" value="5"
 							{{in_array(5,old('subject_name',[])) ? 'checked' : ''}}/>Chemistry</li>
-							<li><input type="checkbox" name="subject_name[]" id="subject_6" value="6"
-							{{in_array(6,old('subject_name',[])) ? 'checked' : ''}}/>History</li>
 							<li><input type="checkbox" name="subject_name[]" id="subject_7" value="7"
 							{{in_array(7,old('subject_name',[])) ? 'checked' : ''}}/>Botany</li>
 							<li><input type="checkbox" name="subject_name[]" id="subject_8" value="8"

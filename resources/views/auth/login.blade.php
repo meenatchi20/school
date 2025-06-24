@@ -25,9 +25,9 @@
                 <span>{{$errors->first('user_password')}}</span>
                  @endif
 
-                <button>Login</button>
+                <button class="login">Login</button>
                 <div class="actions">
-                    <a href="">Forget Password</a>
+                    <a href="{{route('forget.password')}}">Forget Password</a>
                     <a href="{{route('user.signup')}}">SignUp</a>
                 </div>
             </form> 

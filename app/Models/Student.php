@@ -24,4 +24,8 @@ class Student extends Model
     }
 
 
+     public function subjectMarks()
+    {
+        return $this->belongsToMany(Subject::class,'student_mark','student_id','subject_id')->withPivot('mark');
+    }
 }

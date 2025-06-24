@@ -71,7 +71,7 @@
                   <li><input type="checkbox" name="subject_name[]" id="subject_3" value="3" {{$student->subject->contains('id',3) ? 'checked' : ''}}/>Math</li>
                   <li><input type="checkbox" name="subject_name[]" id="subject_4" value="4" {{$student->subject->contains('id',4) ? 'checked' : ''}}/>Physics</li>
                   <li><input type="checkbox" name="subject_name[]" id="subject_5" value="5" {{$student->subject->contains('id',5) ? 'checked' : ''}}/>Chemistry</li>
-                  <li><input type="checkbox" name="subject_name[]" id="subject_6" value="6" {{$student->subject->contains('id',6) ? 'checked' : ''}}/>History</li>
+                  <!-- <li><input type="checkbox" name="subject_name[]" id="subject_6" value="6" {{$student->subject->contains('id',6) ? 'checked' : ''}}/>History</li> -->
                   <li><input type="checkbox" name="subject_name[]" id="subject_7" value="7" {{$student->subject->contains('id',7) ?'checked' : ''}}/>Botany</li>
                   <li><input type="checkbox" name="subject_name[]" id="subject_8" value="8" {{$student->subject->contains('id',8) ? 'checked' : ''}}/>Zoology</li>
                   </ul>

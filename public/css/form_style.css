@@ -13,6 +13,7 @@ label {
     margin-bottom:10px;
     font-size:15px;
     font-weight: bold;
+    
 }
 
 input[type="text"],
@@ -252,4 +253,66 @@ checkbox {
 .clear a {
     text-decoration: none;
     color:white;
+}
+
+
+.studentMarkList {
+    width:auto;
+    border:none;
+    padding: 9px 30px;
+    color:white;
+    cursor:pointer;
+    text-decoration:none;
+    border-radius: 5px;
+}
+
+.studentMarkList:hover {
+    background-color:burlywood;
+}
+
+.ContactPage {
+    width: 150px;
+    border:none;
+    padding:10px;
+    color:white;
+    border-radius: 5px;
+    display: inline-block;
+    color:white;
+    text-decoration:none;
+    text-align:center;
+    font-weight: bold;
+}
+
+.ContactPage:hover {
+     background-color: #d6428a;
+}
+
+.radioBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.radioOption {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.radioLabel {
+    margin: 0;
+}
+
+.studentList {
+    width:auto;
+    border:none;
+    padding: 9px 30px;
+    background-color:palevioletred;
+    cursor:pointer;
+    text-decoration:none;
+    border-radius: 5px;
+    color: white;
 }

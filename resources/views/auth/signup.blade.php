@@ -40,9 +40,34 @@
 							<span>{{$errors->first('password_confirmation')}}</span>
 				@endif
                 
+                <!-- <div class="selectDepartment">
+                        <label for="role">User Role :</label>
+                        <select id="role" name="role" class="selectRole">
+                            <option value="" disabled selected hidden>Select Role</option>
+                            <option value="SuperAdmin"  {{old('role') == 'SuperAdmin' ? 'selected' : ''}}>SuperAdmin
+                            </option>
+                            <option value="Admin"  {{old('role') == 'Admin' ? 'selected' : ''}}>Admin</option>
+                            <option value="User" {{old('role') == 'User' ? 'selected' : ''}}>User</option>
+                            <option value="Manager" {{old('role') == 'Manager' ? 'selected' : ''}}>Manager</option>
+                            
+                        </select>
+                    </div> -->
+
+                 <div class="selectDepartment">
+                         <label for="role_id">User Role :</label>
+                        <select id="role_id" name="role_id" class="selectRole">
+                            <option value="" disabled selected hidden>Select Role</option>
+                            <option value="1"  {{old('role_id') == 1 ? 'selected' : ''}}>SuperAdmin</option>
+                            <option value="2"  {{old('role_id') == 2 ? 'selected' : ''}}>Admin</option>
+                             <option value="3" {{old('role_id') == 3 ? 'selected' : ''}}>Manager</option>
+                             <option value="4" {{old('role_id') == 4 ? 'selected' : ''}}>User</option>
+                            
+                         </select>
+                     </div>    
+                    <div class="signupBack">
                     <button type="submit" class="signUp">SignUp</button>
                     <a class="BackLogin" href="{{route('user.login')}}">Back</a>
-                  
+                    </div>
             </form>
         </div>
  @endsection

@@ -65,26 +65,62 @@
                 </ul>
              </div>
     </div>
-            <button type="submit" value="Search" name="Search" class="search">Search</button>
+            <button type="submit" value="Search" name="Pdf" class="search">Search</button>
             <div class="clear">
             <a href="{{ route('student.list') }}">clear</a>
             </div>
     </div>
-            <div class="download-section">
+        <div class="download-section">
+            @auth()
+            @can('pdfDownload',\App\Models\Student::class)
+            <div>
                     <button type="submit" name="Pdf" value="Pdf" class="downloadpdf"><i class="fa-solid fa-download"></i>DownLoadPdf</button>
-                    <a href="{{route('exceldownload')}}"  class="excelBtn"><i class="fa-solid fa-file-arrow-down"></i>Export Excel</a>
+              </div>      
+             @endcan
+            @can('ExcelExport',\App\Models\Student::class)                 
+                <div class="excelBtn">
+                    <!-- <button type="submit" name="excel" value="excel" class="excelReport">Excel</button> -->
+                    <a href="{{route('exceldownload')}}"  class="excelReport">Initiated Report Download</a>
+                    <span id="open" class="openIcon"><i class="fa-solid fa-circle-info"></i></span>
+                 </div> 
+                 <!-- <a href="{{route('showForm')}}" class="ContactPage"><i class="fa-solid fa-envelope"></i>  ContactPage</a> -->
                 </div>
+
+                @endcan
+            @endauth  
+         </div>       
      </form>
-            
-            
-            <div class="importSection">
-                <form action="implodeexcel" method="POST" class="importFileForm" enctype="multipart/form-data">
-                    @csrf
-                    <input type="file" name="student_file" class="importStudentFile">
-                    <button type="submit" class="import">Import</button>
-                </form>
-                 
-            </div>
+           
+            @auth
+            @php
+                $canMarkImport = auth()->user()->can('markImport', \App\Models\Student::class);
+                $canDataImport = auth()->user()->can('studentDataImport', \App\Models\Student::class);
+            @endphp
+
+            @if($canMarkImport || $canDataImport)
+        <div class="importSection">
+            <form action="{{ route('implodeStudentData') }}" method="POST" class="importFileForm" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="student_file" class="importStudentFile">
+
+                @if($errors->has('student_file'))
+                    <span>{{ $errors->first('student_file') }}</span>
+                @endif
+
+                @if($canMarkImport)
+                    <button type="submit" class="import" name="import" value="ImportMark">ImportMark</button>
+                @endif
+
+                @if($canDataImport)
+                    <button type="submit" class="import" name="import" value="importData">ImportData</button>
+                @endif
+            </form>
+        </div>
+    @endif
+@endauth
+
+
+           
     <table>
          <tr>
             <th>Id</th>
@@ -93,9 +129,13 @@
             <th>email</th>
             <th>phone number</th>
             <th>age</th>
-             <th>Department</th>
+            <th>Department</th>
             <th>Subject</th> 
-            <th>Action</th>
+           
+             @can('create',\App\Models\Student::class)
+           <th>Action</th>
+           @endcan
+            
            
         </tr>
 
@@ -113,22 +153,78 @@
                     {{ $subject->subject_name }}<br>
                 @endforeach
             </td>
-            <td>
+            
+           
+                @auth()
+                @can('update',$student)
+                 <td>
                 <div class="editDel">
-                <a href="{{route('student.edit',$student->id)}}" class="editBtn"><i class='fa-solid fa-pencil'></i></a> 
+                <a href="{{route('student.edit',$student->id)}}" class="editBtn"><i class='fa-solid fa-pencil'></i></a>
+                 @endcan 
+                    @can('delete',$student)
                     <form action="{{route('student.delete',$student->id)}}" method ="POST" onclick="return confirm('Are You Sure You Want To Delete This Record?')">
                         @csrf
                         @method('DELETE')
                         <button class="button" type="submit"><i class='fa-solid fa-trash'></i></button>
                     </form>
+                    @endcan
                 </div>
-            </td>
+                </td>
+                
+                 @endauth
+            
            
         </tr>
              @endforeach
     </table>  
-            <p> {{ $students->links() }}</p>
+            <p> {{ $students->appends(request()->query())->links() }}</p>
 
+
+        <div class="wrapper-modal" id="modal">
+            <div class="container">
+                <i class="fa-solid fa-xmark close" id="cancelbtn"></i>
+                    <h1>Initiated Report</h1>
+                        <table>
+                            <tr>
+                                <th>ID</th>
+                                <th>UserName</th>
+                                <th>FileName</th>
+                                <th>Status</th>
+                                <th>Initiated_at</th>
+                                <th>Completed_at</th>
+                                <th>Download</th>
+                            </tr>
+
+                            @foreach($exportDatas as $exportData)
+                                <tr>
+                                    <td>{{$exportData->id}}</td>
+                                    <td>{{$exportData->user?->name}}</td>
+                                    <td>{{$exportData->file_name}}</td>
+                                    <td>{{$exportData->status}}</td>
+                                    <td>{{$exportData->initiated_at}}</td>
+                                    <td>{{$exportData->completed_at}}</td>
+                                    <td><a href="{{asset('storage/exports/'. $exportData->file_name)}}" download class="pdfDownload">Download</a></td>
+                                </tr>   
+                            @endforeach
+                    </table>
+            </div>
+        </div>
+
+        <script>
+                document.addEventListener('DOMContentLoaded', function(){
+                    const modal = document.getElementById('modal');
+                    const open = document.getElementById('open');
+                    const close = document.getElementById('cancelbtn');
+
+                    open.onclick = () => {
+                        modal.style.display = 'block';
+                    }
+
+                    close.onclick = () => {
+                        modal.style.display = 'none';
+                    }
+                })
+        </script>
            
 @endsection
 @section('footer')

@@ -14,6 +14,7 @@ class StudentExport implements FromCollection, WithHeadings, WithMapping
     */
     public function collection()
     {
+        //sleep(25);
         return Student::with(['department','subject'])->get();
     }
 
@@ -46,7 +47,7 @@ class StudentExport implements FromCollection, WithHeadings, WithMapping
             $student->phone_no,
             $student->age,
             $student->department?->department_name ?? '',
-             $student->subject->pluck('subject_name')->implode(', ')
+            $student->subject->pluck('subject_name')->implode(', ')
         ];
 
     }

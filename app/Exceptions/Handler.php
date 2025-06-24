@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Symfony\Component\HttpFoundation\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -44,5 +45,18 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+
+         $this->renderable(function (AuthorizationException $e, $request) {
+                        if ($request->expectsJson()) {
+                            return response()->json([
+                                'success' => false,
+                                'message' => 'You are not authorized to perform this action.',
+                            ], Response::HTTP_FORBIDDEN); // 403
+                        }
+
+                        // Optional: for web UI
+                        return redirect()->route('home')->with('error', 'Unauthorized access.');
+                    });
     }
 }

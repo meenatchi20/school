@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Providers;
+use Laravel\Passport\Passport;
+use App\Policies\StudentPolicy;
+use App\Models\Student;
+use App\Models\User;
 
-// use Illuminate\Support\Facades\Gate;
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,8 +17,11 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+          Student::class => StudentPolicy::class,
+         
     ];
+
+
 
     /**
      * Register any authentication / authorization services.
@@ -23,6 +30,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Passport::tokensExpireIn(now()->addMinutes(30));
+        Passport::refreshTokensExpireIn(now()->addMinutes(30));
+        Passport::personalAccessTokensExpireIn(now()->addMinutes(30));
+        
+    // Gate::define('admin',function($user){
+    //     return in_array($user->role->role,['Admin', 'SuperAdmin']);
+    //     });
+
     }
 }

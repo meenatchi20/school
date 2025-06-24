@@ -6,11 +6,12 @@
     table,th,td {
         border:1px solid black;
         border-collapse:collapse;
-        padding:5px;
+        padding:13px 5px;
     }
     table {
-        width:80%;
+        width:90%;
         margin:20px auto;
+        table-layout: auto;
     }
     th{
         text-align:center;
@@ -131,6 +132,7 @@
         text-decoration: none;
         line-height:36px;
         border-radius: 5px;
+        color: white;
        
     }
     .clear a {
@@ -139,14 +141,12 @@
     }
 
     /*searchForm*/
-    .searchForm {
+    /*.searchForm {
             display: flex;
             flex-wrap: wrap; 
             gap: 10px;
             align-items: center;
-     }
-
-
+     }*/
 
     select {
         width:100%;
@@ -163,8 +163,7 @@
     }
   
   
-  /* The element to show/hide */
-  
+  /* The element to show/hide */  
   .toggle-content{
     display: none;
     z-index: 2;
@@ -187,15 +186,13 @@
         padding: 7px;
   }
   
-  /* The label that controls the element */
-  
+  /* The label that controls the element */ 
   .label-toggle,.departmentlabel-toggle {
     cursor: pointer;
   }
   
   
-  /* Show the element when the checkbox is checked */
-  
+  /* Show the element when the checkbox is checked */ 
   .hidden-checkbox:checked+.toggle-content {
     display: block;
   }
@@ -220,13 +217,16 @@
     display: flex;
     margin-left:20px;
     margin-bottom:20px;
+    flex-wrap: wrap; 
+    gap: 10px;
+    align-items: center
 
  }
-input[type="text"]{
+input[type="text"],input[type="search"]{
     width: 180px;
-    height: 20px;
+  
     margin: 10px;
-    padding:7px;
+    padding:9px;
     border-radius: 5px;
     border:1px solid #ccc;
 
@@ -264,6 +264,20 @@ checkbox {
     background-color:green;
 }
 
+
+.studentMarkList {
+    width:auto;
+    border:none;
+    padding: 9px 30px;
+    color:white;
+    cursor:pointer;
+    text-decoration:none;
+    border-radius: 5px;
+}
+
+.studentMarkList:hover {
+    background-color:burlywood;
+}
 .search{
     width: 180px;
     height: 35px;
@@ -310,22 +324,33 @@ label {
 }
 
 .excelBtn {
-    width: 150px;
-    background-color:#1774b3;
+    background-color:#07bab7;*/
     border:none;
     padding:10px;
-    color:white;
     border-radius: 5px;
+}
+.fa-download, .fa-eye {
+    margin-right:2px;
+}
+
+.fa-circle-info {
+    color:#081645;
+    font-size:20px;
+}
+
+.openIcon {
+     margin:3px;
+}
+
+.excelReport {
     color:white;
-    text-decoration:none;
-    text-align:center;
+    text-decoration: none;
+    text-align: center;
+    font-size:17px;
+    background: none;
+    border: none;
+
 }
-.fa-download, .fa-file-arrow-down {
-    margin-right:3px;
-}
-
-
-
 .importSection {
     display: flex;
     justify-content: space-between;
@@ -387,4 +412,121 @@ label {
     border:none;
     color:white;
     border-radius: 5px;
+}
+
+
+span {
+    color: red;
+    font-size: 0.9em;
+    display:inline-block;
+    margin-bottom:7px;
+}
+
+.wrapper-modal {
+    display:none;
+    position:fixed;
+    z-index:10;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    left:0;
+    top:0;
+    background-color: gray;
+}
+
+.container {
+    background-color: white;
+    width:53%;
+    padding:20px;
+    margin:20px auto;
+    position:relative;
+}
+.close {
+    position: absolute;
+    top:10px;
+    right:15px;
+    color:black;
+}
+
+.pdfDownload {
+    border:none;
+    background-color:#6e14e3;;
+    padding:7px;
+    border-radius: 5px;
+    color:whitesmoke;
+    text-decoration: none;
+}
+
+.totalStudent {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+}
+
+.studentList {
+    background-color: red;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color:white;
+    text-decoration: none;
+   
+}
+.button-container {
+    display: flex;
+    justify-content: flex-end; 
+    margin-bottom: 10px;
+    margin-right: 153px;
+}
+
+.ContactPage {
+    width: 150px;
+    border:none;
+    padding:10px;
+    color:white;
+    border-radius: 5px;
+    display: inline-block;
+    color:white;
+    text-decoration:none;
+    text-align:center;
+    font-weight: bold;
+}
+
+.ContactPage:hover {
+     background-color: #d6428a;
+}
+
+.pagination {
+       text-align: center;
+       margin-bottom: 20px;
+}
+
+.paginateBtn {
+    margin: 5px;
+    padding: 8px 16px;
+}
+.paginateBtn:disabled {
+    background-color: green;
+    color:white;
+    border:none;
+
+}
+
+
+
+.editDelete{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:8px;
+}
+
+.subjects {
+     display: flex;
+     justify-content:space-evenly; 
+     gap:10px;
+
+}
+.subject-block{
+    display: block;
+    margin-right: 50px;
 }

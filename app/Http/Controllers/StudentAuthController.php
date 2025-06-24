@@ -4,70 +4,55 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\RoleUser;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Services\CommonService;
+use App\Http\Requests\StudentAuthRequest;
+use App\Http\Requests\studentLoginRequest;
+
 class StudentAuthController extends Controller
 {
-    public function showLoginPage()
-    {
-        return view('auth.login');
-    }
-
-    public function signUpPage()
-    {
-        return view('auth.signup');
-    }
-
-    public function signUpCreate(Request $request){
-        $request->validate([
-            'name' => 'required',
-            'mobileNo' => 'required|unique:users,mobileNo|numeric',
-            'email' => 'required|unique:users,email|email',
-            'password' =>'required|confirmed|min:5|max:15'
-        ]);
-
-        $data = $request->all();
-        $userLogin = new User();
-        $userLogin->name = $data['name'];
-        $userLogin->mobileNo = $data['mobileNo'];
-        $userLogin->email = $data['email'];
-        $userLogin->password = Hash::make($data['password']);
-
-        $userLogin->save();
-
-        return redirect()->route('user.login')->with('success','signUp Successfully');
-    }
-
-    public function processLogin(Request $request)
-    {
-       // try{
-        $request->validate([
-        'user_name' => 'required',
-        'user_password' =>'required|min:5|max:15'
-         ]);
-
-       $data = [
-        'name' => $request->user_name,
-        'password' => $request->user_password
-       ];
-
-       
-        if(Auth::attempt($data)){
-            return redirect()->route('student.list');
-        }else {
-            echo "hii";
+        //Login Page
+        public function showLoginPage()
+        {
+            return view('auth.login');
         }
-    }
-    // catch(Exception $e){
-    //     echo $e->getMessage();
-    // }
 
-  
-   // }
+        //SignUp Page
+        public function signUpPage()
+        {
+            return view('auth.signup');
+        }
 
+        //SignUp Process
+        public function signUpCreate(StudentAuthRequest $request,CommonService $signUp){
+            $datas = $request->validated();
+            $data = $signUp->signUpCreate($datas);
+            return redirect()->route('user.login')->with('success','signUp Successfully');
+        }
 
-   public function logout(){
-        Auth::logout();
-        return redirect()->route('user.login');
-   }
+        //Login Process
+        public function processLogin(studentLoginRequest $request,CommonService $login){
+        
+
+            $data = $request->validated();
+            $loginData = $login->login($data);
+             
+            if(Auth::attempt($loginData)){
+                return redirect()->route('student.list')->with('success','login Successfully');
+            }else {
+              return back()->withErrors([
+                        'user_name' => 'please enter valid UserName',
+                        'user_password' => 'please enter valid Password',
+                    ]);
+            }
+        }
+
+        //Logout
+       public function logout(){
+            Auth::logout();
+            return redirect()->route('user.login');
+       }
 }
