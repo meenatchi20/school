@@ -138,3 +138,33 @@ Route::get('apiresetpassword/{token}', function ($token) {
   Route::get('assignpermission',function(){
     return view('api_studentdata.role_assign_permission');
   });
+
+  // Api - Menu List page
+  Route::get('menulist',function(){
+    return view('api_studentdata.api_menulist');
+  });
+
+  //Api - Edit Menu
+   Route::get('editmenu/{id}',function(){
+    return view('api_studentdata.api_edit_menu');
+  });
+
+// Api - Role List page
+  Route::get('rolelist',function(){
+    return view('api_studentdata.api_role_list');
+  });
+
+  //Api - Edit Role
+  Route::get('editrole/{id}',function(){
+    return view('api_studentdata.api_edit_role');
+  });
+
+  //ToDo List
+   Route::get('todolist',function(){
+    return view('api_studentdata.api_todo_list');
+  });
+
+ //Approved List
+   Route::get('approved/list',function(){
+    return view('api_studentdata.approved_student_list');
+  });

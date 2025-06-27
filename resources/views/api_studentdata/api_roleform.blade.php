@@ -17,7 +17,7 @@
 					<span id="role_err"></span>
 					<div class="signupBack">
 					<input type="submit" name="submit" value="Create" class="submit">
-					<a class="reset" href="/apistudentlist">Student List</a>
+					<a class="reset" href="/rolelist">Role List</a>
 				</div>
 				</form>
 		</div>

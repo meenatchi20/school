@@ -35,6 +35,11 @@
 	        }
 		}
 
+		//Edit 
+		public function editMenu($id){
+			return Menu::findOrFail($id);
+		}
+
 		//Update Menu
 		public function updateMenu($id, $request){
 			try{
@@ -91,6 +96,12 @@
 		 	}
 		}
 
+
+		//Edit Role 
+		//Edit 
+		public function editRole($id){
+			return RoleModel::findOrFail($id);
+		}
 		//Update Role
 		public function updateRole($id, $request){
 			try{

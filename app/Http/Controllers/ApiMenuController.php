@@ -55,6 +55,21 @@ class ApiMenuController extends Controller
         }
     }
 
+    public function edit(string $id, RoleMenuServices $editMenuData){
+            $editMenu = $editMenuData->editMenu($id);
+            if($editMenu){
+                return response()->json([
+                    'success' => true,
+                    'data' => $editMenu
+                ]);
+             }else{
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Menu does not Find'
+                ]);
+             }
+    }
+
     //Update Menu
     public function update(MenuRequest $request, string $id, RoleMenuServices $updateMenuData){
             
@@ -77,6 +92,7 @@ class ApiMenuController extends Controller
 
         //Delete Menu
           public function delete($id, RoleMenuServices $deleteMenuData){
+            
             $deleteMenu = $deleteMenuData->deleteMenu($id);   
             if($deleteMenu){
                 return response()->json([

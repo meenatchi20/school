@@ -18,7 +18,8 @@ use App\Models\User;
 use App\Models\StudentMapping;
 use App\Models\StudentMark;
 use App\Models\RoleModel;
-
+use App\Models\StudentTempData;
+use App\Models\ApprovedStudents;
 
 use App\Services\CommonService;
 use App\Exports\StudentExport;
@@ -85,7 +86,13 @@ class CommonService {
             //Store StudentData
             public function storeStudentData($request){
                try {
-                    $student = new Student();
+
+                    if($request->action === 'add'){
+                        $student = new Student();
+                    }else if($request->action === 'edit'){
+                        $student = Student::findOrFail($request['student_id']);
+                    }
+                    
                     $student->first_name = $request['first_name'];
                     $student->last_name = $request['last_name'];
                     $student->email = $request['email'];
@@ -93,10 +100,13 @@ class CommonService {
                     $student->age = $request['age'];
                     $student->department_id = $request['department_id'];
                     $student->save();
-                     if (!empty($request['subject_name']) && is_array($request['subject_name'])) {
-                       $student->subject()->attach($request['subject_name']); 
-                     }
+                     // if (!empty($request['subject_name']) && is_array($request['subject_name'])) {
+                     //   $student->subject()->attach($request['subject_name']); 
+                     // }
                     
+                    if ($request->subject()->exists()) {
+                        $student->subject()->sync($request->subject->pluck('id')->toArray());
+                     }
 
                     return $student;
                } 
@@ -393,6 +403,117 @@ class CommonService {
                return true;
                
             }   
+
+
+            //store temp student data to temptable
+            public function storeTempData($data){
+                try {
+                    $student = new StudentTempData(); 
+                    $student->student_id = $data['student_id'] ?? null;
+                    $student->first_name = $data['first_name'];
+                    $student->last_name = $data['last_name'];
+                    $student->email = $data['email'];
+                    $student->phone_no = $data['phone_no'];
+                    $student->age = $data['age'];
+                    $student->department_id = $data['department_id'];
+                    $student->action = $data['action'];
+                    $student->maker_by = $data['maker_by'];
+                    $student->maker_at = $data['maker_at'];
+                    $student->save();
+                     if (!empty($data['subject_name']) && is_array($data['subject_name'])) {
+                       $student->subject()->sync($data['subject_name']); 
+                     }
+                    return $student;
+               } 
+               catch(Exception $e){
+                        Log::error('Store Data Error:' . $e->getMessage());
+                   }   
+            }
+
+            //Show todo List
+            public function toDoListData(){
+            try{
+                $students = StudentTempData::where('status','Pending')->get();
+                if($students){
+                    $data = $students->map(function ($student) {
+                    return  [
+                            'student_id' => $student->id,
+                            'action' => $student->action,
+                            'maker_by' => $student->maker_by,
+                            'maker_at' => $student->maker_at
+                        ];
+                        });
+                                                 
+                    }
+                    return $data; 
+                }catch(Exception $e){
+                    Log::error('Store Data Error:' . $e->getMessage());
+                }
+            }
+
+        //Approve Student
+        public function approvedStudentStore($student,$user){
+            try{                                     
+                 $approved = ApprovedStudents::firstOrCreate (
+                            ['temp_student_id' => $student->id,],
+                            [                        
+                                'action' => $student->action,
+                                'maker_by' => $student->maker_by,
+                                'maker_at' => $student->maker_at,
+                                'approved_by' => $user->role->role,
+                                'approved_at' => now()
+                            ]
+                        );
+              
+                return $approved;
+             }catch(Exception $e){
+               Log::error('Store Data Error:' . $e->getMessage());
+             }   
+        }
+
+        //TempTable
+        public function StudentTempData($id){
+                $tempData = StudentTempData::find($id);
+                return $tempData;
+        }
+
+        //Reject Student
+         public function rejectStudentById($id, $userEmail){ 
+            $tempStudent = StudentTempData::find($id);
+                  if (!$tempStudent) {
+                    return [
+                        'success' => false,
+                        'message' => 'Temp student not found.',
+                        'status' => 404
+                    ];
+                }
+                    if ($tempStudent->status === 'Approved') {
+                        return [
+                            'success' => false,
+                            'message' => 'Student is already approved. Cannot reject.',
+                            'status' => 422
+                        ];
+                    }
+                // Reject student
+                $tempStudent->update(['status' => 'Rejected']);
+
+                // Send rejection mail
+                Mail::send('api_studentdata.api_reject_data_mail', ['student' => $tempStudent], function($message) use ($userEmail) {
+                    $message->to($userEmail);
+                    $message->subject('Student Data Rejected');
+                });
+
+                return [
+                    'success' => true,
+                    'message' => 'Student request rejected and mail sent.',
+                    'status' => 200
+                ];
+            }
+
+            //Show Approved Details for UI
+            public function approvedStudentData(){
+                return ApprovedStudents::get();
+            }
 
  }
 

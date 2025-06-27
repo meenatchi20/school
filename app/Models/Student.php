@@ -28,4 +28,10 @@ class Student extends Model
     {
         return $this->belongsToMany(Subject::class,'student_mark','student_id','subject_id')->withPivot('mark');
     }
+
+    public function studentTempData()
+    {
+        return $this->hasMany(StudentTempData::class);
+    }
+
 }

@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\ApiRoleController;
 use App\Http\Controllers\ApiMenuController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\ApprovalRejecetController;
+use App\Http\Controllers\TempStudentDataController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,7 +44,13 @@ Route::middleware('auth:api')->group(function () {
   Route::post('sendemail',[StudentApiController::class, 'send']);
 
   Route::get('mark', [StudentApiController::class,'mark'])->name('mark');
-  
+
+   Route::POST('tempstore',[TempStudentDataController::class,'tempStudentStore']);
+   Route::get('todoList',[TempStudentDataController::class,'toDoList']);
+   Route::post('/students/approve/{id}', [ApprovalRejecetController::class, 'approve']);
+   Route::post('/students/reject/{id}', [ApprovalRejecetController::class, 'reject']);
+   Route::GET('approvedstudent',[ApprovalRejecetController::class, 'approvedStudent']);
+
 });
 
  Route::post('signup',[AuthApiController::class,'signUpCreate']);
@@ -54,29 +62,32 @@ Route::middleware('auth:api')->group(function () {
  Route::post('resetpassword',[AuthApiController::class,'resetPasswordFormSubmit']);
 
 //Api For Roles
- Route::GET('list/role',[ApiRoleController::class, 'index']);
+ 
  //Route::POST('create/role',[ApiRoleController::class, 'create']);
- Route::PUT('update/role/{id}',[ApiRoleController::class, 'update']);
- Route::DELETE('delete/role/{id}',[ApiRoleController::class, 'delete']);
- Route::GET('show/role/{id}',[ApiRoleController::class, 'show']);
+ 
 
-
- //Api For Menu
-  // Route::GET('list/menu',[ApiMenuController::class, 'index']);
-  // Route::POST('create/menu',[ApiMenuController::class, 'create']);
-  // Route::PUT('update/menu/{id}',[ApiMenuController::class, 'update']);
-  // Route::DELETE('delete/menu/{id}',[ApiMenuController::class, 'delete']);
-  // Route::GET('show/menu/{id}',[ApiMenuController::class, 'show']);
 
 
 //permission assing By SuperAdmin
     Route::middleware(['auth:api'])->group(function () {
-    Route::GET('list/menu',[ApiMenuController::class, 'index']);
-    Route::POST('create/menu',[ApiMenuController::class, 'create']);
-    Route::PUT('update/menu/{id}',[ApiMenuController::class, 'update']);
-    Route::DELETE('delete/menu/{id}',[ApiMenuController::class, 'delete']);
-    Route::GET('show/menu/{id}',[ApiMenuController::class, 'show']);
-    Route::post('/assign', [RolePermissionController::class, 'assignPermission']);
-    Route::DELETE('/deletepermission/{id}', [RolePermissionController::class, 'deletePermission']);
-    Route::POST('create/role',[ApiRoleController::class, 'create']);
+      //Menu
+      Route::GET('list/menu',[ApiMenuController::class, 'index']);
+      Route::POST('create/menu',[ApiMenuController::class, 'create']);
+      Route::get('edit/menu/{id}',[ApiMenuController::class, 'edit']);
+      Route::PUT('update/menu/{id}',[ApiMenuController::class, 'update']);
+      Route::DELETE('delete/menu/{id}',[ApiMenuController::class, 'delete']);
+      Route::GET('show/menu/{id}',[ApiMenuController::class, 'show']);
+
+      //Role      
+      Route::POST('create/role',[ApiRoleController::class, 'create']);
+      Route::GET('list/role',[ApiRoleController::class, 'index']);
+      Route::get('edit/role/{id}',[ApiRoleController::class, 'edit']);
+      Route::PUT('update/role/{id}',[ApiRoleController::class, 'update']);
+      Route::DELETE('delete/role/{id}',[ApiRoleController::class, 'delete']);
+      Route::GET('show/role/{id}',[ApiRoleController::class, 'show']);
+
+      Route::post('/assign', [RolePermissionController::class, 'assignPermission']);
+      Route::DELETE('/deletepermission/{id}', [RolePermissionController::class, 'deletePermission']);
+
+      
 });

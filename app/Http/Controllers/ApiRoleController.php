@@ -51,6 +51,21 @@ class ApiRoleController extends Controller
             }
         }
 
+        //edit Role
+        public function edit(string $id, RoleMenuServices $editRoleData){
+            $editRole = $editRoleData->editRole($id);
+            if($editRole){
+                return response()->json([
+                    'success' => true,
+                    'data' => $editRole
+                ]);
+             }else{
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Role does not Find'
+                ]);
+             }
+    }
         //update Roles
         public function update(RoleRequest $request, string $id, RoleMenuServices $updateRoleData){
             $validateRole = $request->validated();

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -167,8 +168,8 @@
             		editData.setRequestHeader('Authorization' , 'Bearer ' + token);
 		    	    	editData.setRequestHeader('Accept','application/json')
 
-		    	    editData.onload = function () {
-		    	    		if (editData.status === 200) {
+		    	     editData.onload = function () {
+		    	      	if (editData.status === 200) {
         						let student = JSON.parse(editData.responseText);
         						let data = student.data;
         					console.log(student);
@@ -211,10 +212,11 @@
             		let id = getId(); //Get Id in Url
 
             		let updateData = new XMLHttpRequest();
-            		updateData.open("POST",`http://127.0.0.1:8000/api/update/${id}`,true);
+            		//updateData.open("POST",`http://127.0.0.1:8000/api/update/${id}`,true);
+            		updateData.open("POST",`http://127.0.0.1:8000/api/tempstore`,true);
             		updateData.setRequestHeader('Authorization' , 'Bearer ' + token);
             		updateData.setRequestHeader('Accept','application/json');
-            		updateData.setRequestHeader('X-HTTP-Method_Override','PUT')
+            		//updateData.setRequestHeader('X-HTTP-Method_Override','PUT')
 
             		updateData.onload = function() {
             		     if(updateData.status === 200){

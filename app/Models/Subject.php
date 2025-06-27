@@ -18,4 +18,5 @@ class Subject extends Model
         return $this->belongsToMany(Student::class,'student_mapping','student_id','subject_id');
     }
 
+    
 }

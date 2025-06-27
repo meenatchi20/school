@@ -168,7 +168,7 @@
 								let formdata = new FormData(data);
 								
 								let studentData = new XMLHttpRequest();
-								studentData.open("POST",'http://127.0.0.1:8000/api/store',true);
+								studentData.open("POST",'http://127.0.0.1:8000/api/tempstore',true);
 								studentData.setRequestHeader('Authorization','Bearer ' + token);
 								studentData.setRequestHeader('Accept','application/json');
 								//studentData.setRequestHeader('Content-Type','application/json');
@@ -191,8 +191,9 @@
 									let data = JSON.parse(studentData.responseText);
 									alert(data.message);									
 								}
-								studentData.send(formdata);
+								
 								}
+								studentData.send(formdata);
 							})
 					</script>
 </body>

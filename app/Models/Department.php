@@ -16,6 +16,8 @@ class Department extends Model
         return $this->hasMany(Student::class);
     }
 
-   
+    public function studentTempData(){
+        return $this->hasMany(StudentTempData::class);
+    }
 
 }

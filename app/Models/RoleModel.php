@@ -21,5 +21,6 @@ class RoleModel extends Model
    public function menu(){
 
       return $this->belongsToMany(Menu::class,'role_permission');
+      
     } 
 }

@@ -20,6 +20,8 @@
 		    		<a href="/assignpermission" id="roleMenuPermission" class="addEmployee">Role Permission</a>
 		    		<a href="/apimenu" class="addEmployee" id="menuPermission">Menu</a>
 		    		<a href="/apirole" class="addEmployee" id="rolePermission">Role</a>
+		    		<a href="/todolist" class="addEmployee" >TodoList</a>
+		    		<a href="/approved/list" class="addEmployee">Approved List</a>
 		    	</div>
 		    	<button type="button" onclick="logOut()" class="logout">Logout</button>
 			</div>

@@ -5,7 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login Page</title>
 	<link rel="stylesheet" href="css/login_style.css">
+ 
 </head>
+
 <body>
 
           <div class="login-container">
@@ -26,6 +28,8 @@
 		    		</div>
 		        </form>
 		    </div>
+
+
 		<script>
 
 
@@ -89,16 +93,17 @@
                       
                   
                    if(!token) {
-		           alert('Invalid User. Please signUp');
-		           return;
-		           } 
+		           				alert('Invalid User. Please signUp');
+		           				window.location.href = "/apilogin"
+		           				return;
+		           			} 
 
 		          		localStorage.setItem('auth_token', token);// store it 		           
                   alert(response.message);
 
                   	//clear input Field After Succcessfull
                     document.getElementById('user_name').value = "";
-					document.getElementById('user_password').value = ""; 
+					 					document.getElementById('user_password').value = ""; 
 
                   window.location.href = '/apistudentlist'; // redirect 
 

@@ -27,12 +27,14 @@
 		    http.setRequestHeader('Accept','application/json'); 
 		    	if(!token){
 		    		alert('Token has been Expired! Please Login Again');
+		    		window.location.href = '/apilogin';
+                    return;
 		    	}
 
 		    http.onreadystatechange = function () {
 
 		    	if(http.readyState === 4 && http.status === 401){
-		      	alert("Unauthorized");
+		      	//alert("Unauthorized");
 		      	window.location.href = '/apilogin';
 		      	}
 		        else if (http.readyState === 4 && http.status === 200) {
