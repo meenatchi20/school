@@ -1,3 +1,4 @@
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -83,7 +84,7 @@ tr:nth-child(even) {
   background-color:#f9faf2;
 }
 
-.form-group input {
+.form-group input, .form-group select  {
         width: 100%;
         box-sizing: border-box;
         padding: 8px;
@@ -94,11 +95,12 @@ tr:nth-child(even) {
 label {
 	margin-bottom: 8px;
 }    
-input[type="reset"] {
+/*input[type="reset"]*/
+.clear {
 	border: none;
 	background-color: white;
 	color: #24b6e3;
-	font-size: 15px;
+	font-size: 18px;
 	padding: 5px;
 	font-weight: bold;
 }
@@ -135,4 +137,37 @@ input[type="reset"] {
 .fa-magnifying-glass {
 	color: white;
 	padding: 10px
+}
+
+.button {
+     font-size: 16px;
+     background-color: white;
+     border: none;
+     color: red;
+     cursor: pointer;
+}
+
+.status {
+	background-color: #1c6080;
+	color: white;
+	text-align: center;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.mail-status{
+	background-color: #f21844;
+	color: white;
+	text-align: center;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.export {
+	background-color: #0b9e57;
+	border: none;
+	color: white;
+	padding:9px 18px;
+	font-weight: bold;
+	border-radius: 3px;
 }

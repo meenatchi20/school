@@ -10,34 +10,50 @@ use App\Models\Customers;
 use App\Models\Addresses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\InvoiceExport;
 
 class InvoiceService
 {
 
-    public function store($data, $userId)
+     public function store($data, $userId)
     {
-        $draftStatusId = InvoiceStatus::where('invoice_status', 'draft')->value('invoice_status_id');
+       
+        $totalAmount = 0;
 
+        foreach ($data['items'] as $item) {
+            $netAmount = $item['quantity'] * $item['unit_price'];
+            $gstPercent = $item['gst_percent'] ?? 0;
+            $gstAmount = $netAmount * $gstPercent / 100;
+            $total = $netAmount + $gstAmount;
+            $totalAmount += $total;
+        }
         //invoice table data
         $invoice =  invoice::create([
             'invoice_no' => $this->generateInvoiceNumber($data['invoice_date']??now()),
             'invoice_date' => $data['invoice_date'] ?? now(),
             'customer_id' => $data['customer_id'],
             'invoice_due_date' => $data['invoice_due_date'] ?? null,
-            'payment_terms' => $data['payment_terms'] ?? null,
-            'invoice_status_id'=> $draftStatusId ,
+            'total_amount'=> $totalAmount,
+            'additional_text' => $data['additional_text'] ?? null,
             'created_by' => $userId,
-
         ]);
 
          //item table data
         foreach ($data['items'] as $item) {
+            $netAmount = $item['quantity'] * $item['unit_price'];
+            $gstPercent = $item['gst_percent'] ?? 0;
+            $gstAmount = $netAmount * $gstPercent/100;
+            $total =  $netAmount + $gstAmount;
             InvoiceItem::create([
                 'invoice_id' => $invoice->id,
                 'item_name' => $item['item_name'],
                 'quantity' => $item['quantity'],
                 'unit_price' => $item['unit_price'],
-                'net_amount' => $item['quantity'] * $item['unit_price'],
+                'net_amount' => $netAmount,
+                'gst_percent'=> $gstPercent,
+                'gst_amount'=> $gstAmount,
+                'total'=> $total,
                 'created_by' => $userId,
             ]);
         }
@@ -85,22 +101,20 @@ class InvoiceService
             'pincode' => $customerData['pincode'],
             'created_by' => $userId,
         ]);
-       
-        $customer = Customers::latest()->first();
-        $address = Addresses::latest()->first();
-
         $customer->address_id = $address->address_id;
-        
-        return $customer->fresh(['address']);
+        $customer->save();
+        return $customer;
     }
+
 
 
 
         //show invoice table data
         public function invoiceData(){
-            $invoiceData = invoice::paginate(5);
+            $invoiceData = invoice::orderBy('invoice_id','desc')->paginate(5);
             return $invoiceData;
         }
+
 
         //Invoice Search
         public function searchField($request, $paginate=true){
@@ -111,10 +125,10 @@ class InvoiceService
                             Carbon::parse($request['endDate']): null;
 
                 $invoiceNumber = $request['invoice_no'] ?? '';
-                $status = $request['status'] ?? '';
-                $customer_name = $request['customer_name'] ?? '';
+                $inVoiceStatus = $request['invoice_status'] ?? '';
+                $customer_id = $request['customer_id'] ?? '';
 
-                $searchData = invoice::with('status')                
+                $searchData = invoice::with(['status','customer'])                
                     ->when($startDate && !$endDate, function($searchData) use($startDate){
                         return $searchData->whereDate('invoice_date',$startDate);
                     })
@@ -125,7 +139,15 @@ class InvoiceService
 
                     ->when($invoiceNumber, function($searchData, $invoiceNumber){
                         return $searchData->where('invoice_no','LIKE','%' .$invoiceNumber. '%');
-                    });
+                    })
+
+                    ->when($inVoiceStatus, function($searchData, $inVoiceStatus) {
+                            return $searchData->where('invoice_status_id', $inVoiceStatus);
+                        })
+
+                    ->when($customer_id, function($searchData, $customer_id) {
+                            return $searchData->where('customer_id', $customer_id);
+                        });
 
                  /*Log::error($startDate);
                    Log::error($searchData->toSql());   
@@ -151,5 +173,27 @@ class InvoiceService
             $status = InvoiceStatus::all();
             return $status;
         }
+
+        //Customer table
+        public function customerDataList(){
+            $customer = Customers::all();
+            return $customer;
+        }
+
+        //delete invoiceTable Data
+        public function deleteInvoiceData($invoice_id){
+                $invoiceData = invoice::findOrFail($invoice_id);
+                $invoiceData->delete();
+                return $invoiceData;
+        }
+
+
+        // public function exportInvoiceData(){
+        //         try{
+        //             return Excel::download(new InvoiceExport,'invoiceData.csv');
+        //         }catch(Exception $e){
+        //                 Log::error('invoice export Error'. $e->getMessage());
+        //            } 
+        // }           
 
 }

@@ -21,6 +21,7 @@ class InvoiceResource extends JsonResource
             'invoice_due_date' => $this->invoice_due_date,
             'total_amount' => $this->total_amount,
             'balance_amount' =>$this->balance_amount ,
+            'email_send_status' =>$this->email_send_status,
             'invoice_status' => $this->status ? [
                 'id' => $this->invoice_status_id,
                 'status' => $this->status->invoice_status

@@ -27,4 +27,9 @@ class Customers extends Model
     {
         return $this->hasMany(Addresses::class, 'address_id');
     }
+
+    public function invoice()
+    {
+        return $this->hasMany(invoice::class);
+    }
 }

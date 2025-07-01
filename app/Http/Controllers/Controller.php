@@ -799,6 +799,22 @@ class Controller extends BaseController
 //             ],422);
 //     }
 
+
 // }
+
+
+                    
+                      // customerData.addEventListener('change', function () {
+                    //      if (this.value) {
+                    //          isSearching = true;
+                    //          searchData(1);
+                    //      }
+                    //  });
+
+                    // ->when($inVoiceStatus, function($searchData, $inVoiceStatus) {
+                    //     return $searchData->whereHas('status', function ($q) use ($inVoiceStatus) {
+                    //         $q->where('invoice_status', 'LIKE', '%' . $inVoiceStatus . '%');
+                    //     });
+                    // });
 
  }

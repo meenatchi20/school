@@ -16,6 +16,8 @@ class InvoiceItem extends Model
         'quantity',
         'unit_price',
         'net_amount',
+        'gst_percent',
+        'gst_amount',
         'created_by',
         'updated_by',
         'is_deleted'

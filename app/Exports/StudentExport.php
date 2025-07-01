@@ -39,7 +39,6 @@ class StudentExport implements FromCollection, WithHeadings, WithMapping
     public function map($student):array
     {
         return [
-
             $student->id,
             $student->first_name,
             $student->last_name,

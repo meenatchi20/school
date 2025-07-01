@@ -105,7 +105,14 @@ Route::middleware('auth:api')->group(function () {
     //show invoice table data
     Route::GET('invoicedata',[InvoiceController::class, 'invoiceDataList']);
     Route::GET('searchinvoice',[InvoiceController::class, 'searchData']);
+    Route::DELETE('delete/invoicedata/{invoice_id}',[InvoiceController::class, 'destroyInvoice']);
 
     //invoice Status
     Route::GET('invoicestatus',[InvoiceController::class, 'invoiceStatus']);
+
+    //customerData
+    Route::GET('customer/list',[InvoiceController::class, 'customerData']);
+
+    Route::get('invoice/export',[InvoiceController::class, 'exportInvoiceData']);
+
       });

@@ -12,6 +12,9 @@ use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Resources\InvoiceResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\InvoiceExport;
+
 
 class InvoiceController extends Controller
 {
@@ -157,4 +160,77 @@ class InvoiceController extends Controller
            } 
         }
 
+
+        //customer Details
+        public function customerData(InvoiceService $customer){
+            try{
+                $customerData = $customer->customerDataList();
+                    if($customerData){
+                        return response()->json([
+                            'success' => true,
+                            'data' => $customerData
+                        ]);
+                     }else{
+                        return response()->json([
+                            'success' => false,
+                            'error' => 'Customer Data Not Found'
+                        ],401);
+                }
+           }catch(Exception $e){
+                Log::error('error in get Customer Data' . $e->getMessage());
+           } 
+        }
+
+        public function destroyInvoice($invoice_id,InvoiceService $invoiceData){
+            try{
+                $deleteInvoiceData = $invoiceData->deleteInvoiceData($invoice_id);
+                 if($deleteInvoiceData){
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'inVoiceData is deleted successsfully',
+                        ],200);
+                   }else{
+                        return response()->json([
+                            'success' => false,
+                            'errors' => 'Invoice Data Does Not Found'
+                        ],404);
+                   }
+                }catch(Exception $e){
+                    Log::error('error in delete in Invoice Data' . $e->getMessage());
+                }
+            }
+        
+            // public function exportInvoiceData(InvoiceService $exportInvoice){
+            //     try{
+            //         $invoiceData = $exportInvoice->exportInvoiceData();
+            //         if($invoiceData){
+            //             return response()->json([
+            //                 'success' => true,
+            //                 'message' => $invoiceData
+            //             ],200);
+            //         }else{
+            //             return response()->json([
+            //                 'success' => false,
+            //                 'errors' => 'something Err'
+            //             ],404);
+            //         }
+            //     }catch(Exception $e){
+            //         Log::error('error in export in Invoice Data' . $e->getMessage());
+            //     }    
+            // }
+
+
+            public function exportInvoiceData()
+            {
+                try {
+                    return Excel::download(new InvoiceExport, 'invoiceData.csv');
+                } catch (Exception $e) {
+                    Log::error('Invoice export error: ' . $e->getMessage());
+
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Failed to export invoice data.'
+                    ], 500);
+                }
+            }
 }
