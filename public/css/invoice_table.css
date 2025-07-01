@@ -1,0 +1,138 @@
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+a {
+	text-decoration: none;
+	padding:9px 18px;
+	color:white;
+	margin: 5px;
+}
+
+.create-note {
+	background-color:#170b30;
+}
+
+.group-invoice{
+	background-color:#24b6e3;
+}
+
+.create{
+	background-color:#116b2c;
+}
+
+.invoice-search{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-image: linear-gradient(to right, #2f829c, #043240, #100440);
+	margin-bottom: 15px;
+}
+
+p {
+	color: white;
+    padding: 2px 8px;
+}
+
+
+.form-row {
+    display: flex;
+    gap: 20px; /* space between fields */
+    flex-wrap: wrap; 
+    padding: 5px;
+}
+
+.form-group {
+    flex: 1 1 400px;
+    max-width: 400px;     
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    margin-bottom: 5px;
+}
+
+.reset {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 20px;
+	gap: 10px;
+}
+
+table {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+table,th,td {
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+	text-align:left;
+	padding: 8px;
+}
+td {
+	padding: 15px;
+}
+
+th {
+	background-color: #170b30;
+	color: white;
+}
+tr:nth-child(even) {
+  background-color:#f9faf2;
+}
+
+.form-group input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px;
+        font-size: 14px;
+    }
+
+
+label {
+	margin-bottom: 8px;
+}    
+input[type="reset"] {
+	border: none;
+	background-color: white;
+	color: #24b6e3;
+	font-size: 15px;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.search {
+    width: 150px;
+    background-color: #170b30;
+    border:none;
+    padding:10px;
+    color:white;
+    display: inline-block;
+    color:white;
+    text-decoration:none;
+    text-align:center;
+}
+
+
+.pagination {
+       text-align: center;
+       margin-bottom: 20px;
+}
+
+.paginateBtn {
+    margin: 5px;
+    padding: 8px 16px;
+}
+.paginateBtn:disabled {
+    background-color: green;
+    color:white;
+    border:none;
+
+}
+
+.fa-magnifying-glass {
+	color: white;
+	padding: 10px
+}

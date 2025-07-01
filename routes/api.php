@@ -9,6 +9,7 @@ use App\Http\Controllers\ApiMenuController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\ApprovalRejecetController;
 use App\Http\Controllers\TempStudentDataController;
+use App\Http\Controllers\InvoiceController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -91,3 +92,20 @@ Route::middleware('auth:api')->group(function () {
 
       
 });
+
+    Route::middleware(['auth:api'])->group(function() {
+    
+    //invoice 
+    Route::post('invoice',[InvoiceController::class,'store']);
+    Route::get('generatepdf',[InvoiceController::class, 'generatePdf']);
+
+    //customer data
+    Route::post('customer', [InvoiceController::class, 'storeCustomerData']);
+
+    //show invoice table data
+    Route::GET('invoicedata',[InvoiceController::class, 'invoiceDataList']);
+    Route::GET('searchinvoice',[InvoiceController::class, 'searchData']);
+
+    //invoice Status
+    Route::GET('invoicestatus',[InvoiceController::class, 'invoiceStatus']);
+      });

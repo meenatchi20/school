@@ -468,6 +468,12 @@
 							console.log('Update '+update);
 							console.log('delete ' + deletedata);
 		  		 	   }
+
+
+
+
+
+		  		 	   
 		  		 }
 
 		  		 request.send();

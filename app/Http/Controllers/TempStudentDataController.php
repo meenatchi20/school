@@ -19,7 +19,7 @@ class TempStudentDataController extends Controller
             //Temp Student Table
             public function tempStudentStore(StoreTempStudentdata $request, CommonService $storeTemp){
                 try{
-                    Log::info('Incoming request data:', $request->all());
+                    // Log::info('request data:', $request->all()); log
                     $data = $request->validated(); 
                     $students = Student::where('email', $data['email'])->first();
                     if($students){
@@ -32,7 +32,7 @@ class TempStudentDataController extends Controller
                     $user = auth()->user();
                     $data['maker_by'] = $user->role->role; // current user Role
                     $data['maker_at'] = now(); 
-                    Log::info('Data passed to storeTempData:', $data);
+                   // Log::info('Data passed to storeTempData:', $data);
                     $saveData = $storeTemp->storeTempData($data);
                     if($saveData) {
                             return response()->json([

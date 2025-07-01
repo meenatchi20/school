@@ -168,3 +168,10 @@ Route::get('apiresetpassword/{token}', function ($token) {
    Route::get('approved/list',function(){
     return view('api_studentdata.approved_student_list');
   });
+
+
+   //invoice list
+
+   Route::GET('invoice/list',function(){
+      return view('invoice.invoice_list');
+   });

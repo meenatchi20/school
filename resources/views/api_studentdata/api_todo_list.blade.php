@@ -93,6 +93,10 @@
 		                   let responseErr = JSON.parse(xhr.responseText);
 		                   let error = responseErr.error;
 		                   alert(error);
+		                }else if(xhr.status === 401){
+		                	let responseErr = JSON.parse(xhr.responseText);
+		                    let error = responseErr.error;
+		                    alert(error);
 		                }
             		};
             		xhr.send();

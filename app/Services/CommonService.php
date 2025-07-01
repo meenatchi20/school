@@ -494,6 +494,14 @@ class CommonService {
                             'status' => 422
                         ];
                     }
+
+                    if($tempStudent->status === 'Rejected'){
+                         return [
+                            'success' => false,
+                            'message' => 'Student is already  Rejected.please check mail.',
+                            'status' => 401
+                        ];
+                    }
                 // Reject student
                 $tempStudent->update(['status' => 'Rejected']);
 
@@ -514,6 +522,8 @@ class CommonService {
             public function approvedStudentData(){
                 return ApprovedStudents::get();
             }
+
+
 
  }
 
